@@ -1,3 +1,7 @@
+a {
+  text-decoration: none;
+}
+
 .welcome {
   display: flex;
   justify-content: center;
