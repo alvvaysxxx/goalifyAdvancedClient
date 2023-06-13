@@ -45,7 +45,7 @@ export default function Login(props) {
         <Typography variant = 'h6' style = {{ textAlign: 'center', marginBottom: '25px' }}>Войдите в свой аккаунт</Typography>
         <form>
           <TextField label ='Имя пользователя' name = 'username' style = {{ display: 'block', marginBottom: '10px' }} fullWidth onChange = {handleUsername}></TextField>
-          <TextField label ='Пароль' name = 'password' style = {{ display: 'block', marginBottom: '20px' }} fullWidth  onChange = {handlePassword}></TextField>
+          <TextField type = 'password' label ='Пароль' name = 'password' style = {{ display: 'block', marginBottom: '20px' }} fullWidth  onChange = {handlePassword}></TextField>
           {error ? (<Typography variant = 'body1' style = {{ color: 'red', textAlign: 'center', marginBottom: '20px' }}>{error}</Typography>) : (<></>)}
           {username && password ? (<Button variant='contained' onClick = {handleLogin}>Логин</Button>): (<Button variant='contained' disabled onClick = {handleLogin}>Логин</Button>)}
         </form>

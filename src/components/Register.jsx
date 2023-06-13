@@ -66,7 +66,7 @@ export default function Register(props) {
         <Typography variant = 'h6' style = {{ textAlign: 'center', marginBottom: '25px' }}>Регистрация</Typography>
         <form>
           <TextField label ='Имя пользователя' name = 'username' style = {{ display: 'block', marginBottom: '15px' }} fullWidth onChange = {handleUsername}></TextField>
-          <TextField label ='Пароль' name = 'password' style = {{ display: 'block', marginBottom: '10px' }} fullWidth  onChange = {handlePassword}></TextField>
+          <TextField type = 'password' label ='Пароль' name = 'password' style = {{ display: 'block', marginBottom: '10px' }} fullWidth  onChange = {handlePassword}></TextField>
           <TextField label ='Подтвердите пароль' name = 'password' style = {{ display: 'block', marginBottom: '20px' }} fullWidth  onChange = {handleVerifyPassword}></TextField>
           {verifyError ? (<Typography variant = 'body1' style = {{ color: 'red', textAlign: 'center', marginBottom: '20px' }}>Пароли не совпадают</Typography>) : (<></>)}
           {anyErrors ? (<Typography variant = 'body1' style = {{ color: 'red', textAlign: 'center', marginBottom: '20px' }}>{anyErrors}</Typography>) : (<></>)}
