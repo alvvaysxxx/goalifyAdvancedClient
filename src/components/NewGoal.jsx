@@ -43,10 +43,10 @@ export default function NewGoal({token}) {
       <Typography variant = 'h6' sx = {{ textAlign: 'center' }}>Новая цель</Typography>
       <form>
         <TextField required label = 'Заголовок цели' fullWidth onChange = {handleTitle} />
-        <TextField label = 'Описание цели' fullWidth onChange = {handleDesc} />
+        <TextField required label = 'Описание цели' fullWidth onChange = {handleDesc} />
         <Switch onChange={() => setIsImportant(!isImportant)}/><Typography variant = 'p'>Важно</Typography>
       </form>
-      {title ? (<Button variant = 'contained' onClick = {handleForm}>Создать</Button>) : (<Button variant = 'contained' disabled>Создать</Button>)}
+      {title && desc ? (<Button variant = 'contained' onClick = {handleForm}>Создать</Button>) : (<Button variant = 'contained' disabled>Создать</Button>)}
     </div>
   )
 }

@@ -52,3 +52,10 @@ a {
   box-shadow: 3px -17px 35px rgba(0, 0, 0, 0.13);
   border-radius: 15px;
 }
+
+.goals {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+  align-items: center;
+}
