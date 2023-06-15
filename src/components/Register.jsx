@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Button, TextField, Typography } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 import axios from 'axios'
 import '@fontsource/roboto/300.css';
@@ -63,7 +64,8 @@ export default function Register(props) {
   return (
     <div>
       <div className = 'form'>
-        <Typography variant = 'h6' style = {{ textAlign: 'center', marginBottom: '25px' }}>Регистрация</Typography>
+        <ArrowBackIcon onClick = {() => navigate(-1)} sx = {{ mb: '25px' }}/>
+        <Typography variant = 'h6' style = {{ textAlign: 'center',  marginBottom: '25px' }}>Регистрация</Typography>
         <form>
           <TextField label ='Имя пользователя' name = 'username' style = {{ display: 'block', marginBottom: '15px' }} fullWidth onChange = {handleUsername}></TextField>
           <TextField type = 'password' label ='Пароль' name = 'password' style = {{ display: 'block', marginBottom: '10px' }} fullWidth  onChange = {handlePassword}></TextField>

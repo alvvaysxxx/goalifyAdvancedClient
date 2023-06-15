@@ -2,6 +2,8 @@ import React, { useState } from 'react'
 import { Button, TextField, Typography } from '@mui/material'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+
 import '@fontsource/roboto/300.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/500.css';
@@ -42,6 +44,7 @@ export default function Login(props) {
   return (
     <div>
       <div className = 'form'>
+        <ArrowBackIcon onClick = {() => navigate(-1)} sx = {{ mb: '25px' }}/>
         <Typography variant = 'h6' style = {{ textAlign: 'center', marginBottom: '25px' }}>Войдите в свой аккаунт</Typography>
         <form>
           <TextField label ='Имя пользователя' name = 'username' style = {{ display: 'block', marginBottom: '10px' }} fullWidth onChange = {handleUsername}></TextField>

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { TextField, Button, Typography, Switch } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 
 export default function NewGoal({token}) {
 
@@ -40,7 +41,8 @@ export default function NewGoal({token}) {
 
   return (
     <div className = 'newGoal'>
-      <Typography variant = 'h6' sx = {{ textAlign: 'center' }}>Новая цель</Typography>
+      <ArrowBackIcon onClick = {() => navigate(-1)} sx = {{ mb: '15px' }}/>
+      <Typography variant = 'h6' sx = {{ textAlign: 'center', mb: '25px' }}>Новая цель</Typography>
       <form>
         <TextField required label = 'Заголовок цели' fullWidth onChange = {handleTitle} />
         <TextField required label = 'Описание цели' fullWidth onChange = {handleDesc} />
