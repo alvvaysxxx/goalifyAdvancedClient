@@ -14,11 +14,14 @@ import DoneIcon from '@mui/icons-material/Done';
 import Header from './Header';
 import Skeleton from '@mui/material/Skeleton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import Progress from './Progress'
 
 export default function Goals({ token, setToken }) {
-  const [goals, setGoals] = useState(undefined)
-  const [username, setUsername] = useState(undefined)
-  const [changeCount, setChangeCount] = useState(0)
+  let [goals, setGoals] = useState(undefined)
+  let [username, setUsername] = useState(undefined)
+  let [changeCount, setChangeCount] = useState(0)
+  let [completedGoals, setCompletedGoals] = useState(0)
+  let [percentage, setPercentage] = useState(100)
 
   useEffect(() => {
     async function fetchData() {
@@ -28,6 +31,7 @@ export default function Goals({ token, setToken }) {
         }
       })
       setGoals(response.data.goals)
+      countGoals(response.data.goals)
       console.log(response.data.goals)
     }
     async function getusername() {
@@ -89,9 +93,27 @@ export default function Goals({ token, setToken }) {
     }
   }
 
+  const countGoals = (goals) => {
+    let completedCount = 0
+    for (let i = 0; i < goals.length; i++) {
+      if (goals[i].completed === true) {
+        completedCount++
+      }
+    }
+    setCompletedGoals(completedCount)
+    calculatePercentage(goals, completedCount)
+  }
+  
+  const calculatePercentage = (goals, completedCount) => {
+    const calculatedPercentage = (completedCount / goals.length) * 100
+    setPercentage(calculatedPercentage)
+  }
+
   return (
     <div>
       <Header username = {username} setToken = {setToken}/>
+      <Typography variant = 'h6' sx = {{ textAlign: 'center' }}>Целей выполнено:</Typography>
+      <div className='progress'><Progress value = {percentage}/></div>
       <div className = 'goals'>
         {goals ? (
           goals.map((goal, key) =>
