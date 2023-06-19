@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
@@ -15,6 +15,8 @@ import Header from './Header';
 import Skeleton from '@mui/material/Skeleton';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import Progress from './Progress'
+import EditIcon from '@mui/icons-material/Edit';
+import CloseIcon from '@mui/icons-material/Close';
 
 export default function Goals({ token, setToken }) {
   let [goals, setGoals] = useState(undefined)
@@ -22,6 +24,13 @@ export default function Goals({ token, setToken }) {
   let [changeCount, setChangeCount] = useState(0)
   let [completedGoals, setCompletedGoals] = useState(0)
   let [percentage, setPercentage] = useState(100)
+  let [titleIsChanging, setTitleIsChanging] = useState(false)
+  let [descIsChanging, setDescIsChanging] = useState(false)
+  let [title, setTitle] = useState(undefined)
+  let [desc, setDesc] = useState(undefined)
+
+
+  const inputRef = useRef(null);
 
   useEffect(() => {
     async function fetchData() {
@@ -44,7 +53,14 @@ export default function Goals({ token, setToken }) {
     }
     fetchData()
     getusername()
+    
   }, [changeCount])
+
+  useEffect(() => {
+    if ((titleIsChanging || descIsChanging) && inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [titleIsChanging, descIsChanging])
 
   const setImportant = async (id) => {
     try {
@@ -109,6 +125,48 @@ export default function Goals({ token, setToken }) {
     setPercentage(calculatedPercentage)
   }
 
+  const changeTitle = () => {
+    setTitleIsChanging(!titleIsChanging)
+  }
+
+  const handleTitleChange = (e) => {
+    setTitle(e.target.value)
+  }
+
+  const handleDescChange = (e) => {
+    setDesc(e.target.value)
+  }
+
+  const completeChangeTitle = async (id) => {
+    try {
+      const response = await axios.post('https://shy-ruby-lamb-belt.cyclic.app/updategoal', {
+        id,
+        title
+      })
+      setChangeCount(changeCount + 1)
+      changeTitle()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const completeChangeDesc = async (id) => {
+    try {
+      const response = await axios.post('https://shy-ruby-lamb-belt.cyclic.app/updategoal', {
+        id,
+        desc
+      })
+      setChangeCount(changeCount + 1)
+      changeDesc()
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
+  const changeDesc = () => {
+    setDescIsChanging(!descIsChanging)
+  }
+
   return (
     <div>
       <Header username = {username} setToken = {setToken}/>
@@ -123,12 +181,28 @@ export default function Goals({ token, setToken }) {
                   <Typography variant="subtitle2" color="orangered" style={{ opacity: '0.5' }}>
                     Помечено как "важное"
                   </Typography>
-                  <Typography variant="h5" color="orange">
-                    {goal.title}
-                  </Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {goal.desc}
-                  </Typography>
+
+                  {titleIsChanging ? (<><input class = 'titleInput' onChange={handleTitleChange} ref={inputRef}/><DoneIcon onClick = {() => completeChangeTitle(goal._id)} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/><CloseIcon fontSize='medium' onClick = {changeTitle} style ={{ display: 'inline', marginLeft: '5px', opacity: '0.5' }}/></>) : (
+                    <div>
+                      <Typography variant="h5" color="orange" style ={{ display: 'inline' }}>
+                        {goal.title}
+                      </Typography>
+                      <EditIcon onClick = {changeTitle} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/>
+                    </div>
+                  )}
+
+                  
+                  {descIsChanging ? (
+                    <><input class = 'descInput' onChange={handleDescChange} ref={inputRef}/><DoneIcon onClick = {() => completeChangeDesc(goal._id)} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/><CloseIcon fontSize='medium' onClick = {changeDesc} style ={{ display: 'inline', marginLeft: '5px', opacity: '0.5' }}/></>
+                  ) : (
+                    <div>
+                      <Typography sx={{ mb: 1.5 }} color="text.secondary" style ={{ display: 'inline' }}>
+                        {goal.desc}
+                      </Typography>
+                      <EditIcon onClick = {changeDesc} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/>
+                    </div>
+                  )}
+
 
                   <Accordion>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
@@ -170,10 +244,27 @@ export default function Goals({ token, setToken }) {
             !goal.important && !goal.completed ? (
               <Card variant="outlined" key={key} sx={{ maxWidth: 500, marginBottom: '10px' }}>
                 <CardContent>
-                  <Typography variant="h5">{goal.title}</Typography>
-                  <Typography sx={{ mb: 1.5 }} color="text.secondary">
-                    {goal.desc}
-                  </Typography>
+
+                  {titleIsChanging ? (
+                    <><input class = 'simpleTitleInput' onChange={handleTitleChange} ref={inputRef}/><DoneIcon onClick = {() => completeChangeTitle(goal._id)} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/><CloseIcon fontSize='medium' onClick = {changeTitle} style ={{ display: 'inline', marginLeft: '5px', opacity: '0.5' }}/></>
+                  ) : (
+                    <div>
+                      <Typography variant="h5" style = {{ display: 'inline' }}>{goal.title}</Typography>
+                      <EditIcon onClick = {changeTitle} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/>
+                    </div>
+                  )}
+
+                  {descIsChanging ? (
+                     <><input class = 'descInput' onChange={handleDescChange} ref={inputRef}/><DoneIcon onClick = {() => completeChangeDesc(goal._id)} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/><CloseIcon fontSize='medium' onClick = {changeDesc} style ={{ display: 'inline', marginLeft: '5px', opacity: '0.5' }}/></>
+                  ) : (
+                    <div>
+                      <Typography sx={{ mb: 1.5 }} color="text.secondary" style = {{ display: 'inline' }}>
+                        {goal.desc}
+                      </Typography>
+                      <EditIcon onClick = {changeDesc} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/>
+                    </div>
+                  )}
+                  
 
                   <Accordion>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
