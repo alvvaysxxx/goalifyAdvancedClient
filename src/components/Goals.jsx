@@ -182,27 +182,18 @@ export default function Goals({ token, setToken }) {
                     Помечено как "важное"
                   </Typography>
 
-                  {titleIsChanging ? (<><input class = 'titleInput' onChange={handleTitleChange} ref={inputRef}/><DoneIcon onClick = {() => completeChangeTitle(goal._id)} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/><CloseIcon fontSize='medium' onClick = {changeTitle} style ={{ display: 'inline', marginLeft: '5px', opacity: '0.5' }}/></>) : (
+
                     <div>
                       <Typography variant="h5" color="orange" style ={{ display: 'inline' }}>
                         {goal.title}
                       </Typography>
-                      <EditIcon onClick = {changeTitle} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/>
                     </div>
-                  )}
 
-                  
-                  {descIsChanging ? (
-                    <><input class = 'descInput' onChange={handleDescChange} ref={inputRef}/><DoneIcon onClick = {() => completeChangeDesc(goal._id)} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/><CloseIcon fontSize='medium' onClick = {changeDesc} style ={{ display: 'inline', marginLeft: '5px', opacity: '0.5' }}/></>
-                  ) : (
                     <div>
                       <Typography sx={{ mb: 1.5 }} color="text.secondary" style ={{ display: 'inline' }}>
                         {goal.desc}
                       </Typography>
-                      <EditIcon onClick = {changeDesc} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/>
                     </div>
-                  )}
-
 
                   <Accordion>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1a-content" id="panel1a-header">
@@ -245,25 +236,15 @@ export default function Goals({ token, setToken }) {
               <Card variant="outlined" key={key} sx={{ maxWidth: 500, marginBottom: '10px' }}>
                 <CardContent>
 
-                  {titleIsChanging ? (
-                    <><input class = 'simpleTitleInput' onChange={handleTitleChange} ref={inputRef}/><DoneIcon onClick = {() => completeChangeTitle(goal._id)} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/><CloseIcon fontSize='medium' onClick = {changeTitle} style ={{ display: 'inline', marginLeft: '5px', opacity: '0.5' }}/></>
-                  ) : (
                     <div>
                       <Typography variant="h5" style = {{ display: 'inline' }}>{goal.title}</Typography>
-                      <EditIcon onClick = {changeTitle} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/>
                     </div>
-                  )}
 
-                  {descIsChanging ? (
-                     <><input class = 'descInput' onChange={handleDescChange} ref={inputRef}/><DoneIcon onClick = {() => completeChangeDesc(goal._id)} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/><CloseIcon fontSize='medium' onClick = {changeDesc} style ={{ display: 'inline', marginLeft: '5px', opacity: '0.5' }}/></>
-                  ) : (
                     <div>
                       <Typography sx={{ mb: 1.5 }} color="text.secondary" style = {{ display: 'inline' }}>
                         {goal.desc}
                       </Typography>
-                      <EditIcon onClick = {changeDesc} style ={{ display: 'inline', marginLeft: '10px', opacity: '0.5' }}/>
                     </div>
-                  )}
                   
 
                   <Accordion>
